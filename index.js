@@ -6,11 +6,8 @@ const path = require('path');
 // Load environment variables
 require('dotenv').config();
 
-// Instagram API credentials
 const ACCESS_TOKEN = process.env.IG_ACCESS_TOKEN;
 const INSTAGRAM_USER_ID = process.env.IG_USER_ID;
-
-// OpenAI API credentials
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // Generate caption using OpenAI's GPT-3.5
@@ -19,7 +16,7 @@ async function generateCaption() {
     'https://api.openai.com/v1/completions',
     {
       model: 'text-davinci-003',
-      prompt: 'Generate a caption for a beautiful pink and glittery nail art.',
+      prompt: 'I am nail artist and have an instagram page with around 1000 followers. I want to write a captivating caption for the following nail art. Write a caption that attracts more followers to my page.',
       max_tokens: 50,
     },
     {
@@ -33,7 +30,7 @@ async function generateCaption() {
   return response.data.choices[0].text.trim();
 }
 
-// Upload photo to Instagram
+// Upload photos to Instagram
 async function uploadPhoto(photoPath, caption) {
   const formData = new FormData();
   formData.append('image', fs.createReadStream(photoPath));
@@ -71,7 +68,6 @@ async function publishPhoto(mediaId) {
   return response.data;
 }
 
-// Main function
 (async () => {
   try {
     const photoPath = path.join(__dirname, 'photo.jpg');
